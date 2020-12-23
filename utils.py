@@ -8,10 +8,10 @@ import numpy as np
 import os.path
 from gensim import matutils
 
-from naga.shared.kb import KB
+from emoji2vec.naga.shared.kb import KB
 
 # Internal dependencies
-from phrase2vec import Phrase2Vec
+from emoji2vec.phrase2vec import Phrase2Vec
 
 # Authorship
 __author__ = "Ben Eisner, Tim Rocktaschel"
@@ -85,9 +85,9 @@ def build_kb(data_folder):
     # KB indices to emoji
     ind_to_emoj = dict()
 
-    __read_data(data_folder + 'train.txt', base, ind_to_phr, ind_to_emoj, 'train')
-    __read_data(data_folder + 'dev.txt', base, ind_to_phr, ind_to_emoj, 'dev')
-    __read_data(data_folder + 'test.txt', base, ind_to_phr, ind_to_emoj, 'test')
+    __read_data(data_folder + '/train.txt', base, ind_to_phr, ind_to_emoj, 'train')
+    __read_data(data_folder + '/dev.txt', base, ind_to_phr, ind_to_emoj, 'dev')
+    __read_data(data_folder + '/test.txt', base, ind_to_phr, ind_to_emoj, 'test')
 
     return base, ind_to_phr, ind_to_emoj
 

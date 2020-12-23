@@ -92,7 +92,7 @@ def train_save_evaluate(params, kb, train_set, dev_set, ind2emoji, embeddings_ar
     predictions = dict()
     results = dict()
 
-    with tf.Session() as sess:
+    with tf.compat.v1.Session() as sess:
         saver = tf.train.Saver()
 
         # If we don't have a checkpoint, we must retrain it
@@ -101,7 +101,7 @@ def train_save_evaluate(params, kb, train_set, dev_set, ind2emoji, embeddings_ar
 
         else:
             # For visualizing using tensorboard
-            summary_writer = tf.train.SummaryWriter(model_folder + '/board', graph=sess.graph)
+            summary_writer = tf.summary.FileWriter(model_folder + '/board', graph=sess.graph)
 
             # Keep track of how the model is training
             hooks = [

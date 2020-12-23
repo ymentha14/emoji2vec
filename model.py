@@ -85,16 +85,16 @@ class Emoji2Vec:
         is_proj = not (model_params.in_dim == model_params.out_dim)
 
         # Phrase indices in current batch
-        self.row = tf.placeholder(tf.int32, shape=[None], name='row')
+        self.row = tf.compat.v1.placeholder(tf.int32, shape=[None], name='row')
 
         # Phrase vectors in current batch (optional input to the graph)
-        self.orig_vec = tf.placeholder(tf.float32, shape=[None, model_params.in_dim], name='orig_vec')
+        self.orig_vec = tf.compat.v1.placeholder(tf.float32, shape=[None, model_params.in_dim], name='orig_vec')
 
         # Emoji indices in current batch
-        self.col = tf.placeholder(tf.int32, shape=[None], name='col')
+        self.col = tf.compat.v1.placeholder(tf.int32, shape=[None], name='col')
 
         # Correlation between an emoji and a phrase
-        self.y = tf.placeholder(tf.float32, shape=[None], name='y')
+        self.y = tf.compat.v1.placeholder(tf.float32, shape=[None], name='y')
 
         # Column embeddings (here emoji representations)
         self.V = tf.Variable(tf.random_uniform([num_emoji, model_params.out_dim], -0.1, 0.1), name="V")
@@ -119,13 +119,13 @@ class Emoji2Vec:
         v_col = tf.nn.dropout(v_col, (1 - model_params.dropout))
 
         # Calculate the predicted score, a.k.a. dot product (here)
-        self.score = tf.reduce_sum(tf.mul(v_row, v_col), 1)
+        self.score = tf.reduce_sum(tf.multiply(v_row, v_col), 1)
 
         # Probability of match
         self.prob = tf.sigmoid(self.score)
 
         # Calculate the cross-entropy loss
-        self.loss = tf.nn.sigmoid_cross_entropy_with_logits(self.score, self.y)
+        self.loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=self.score, logits=self.y)
 
     # train the model using the appropriate parameters
     def train(self, kb, hooks, session):
@@ -259,7 +259,7 @@ class Emoji2Vec:
             f.write('\n')
         f.close()
 
-        e2v = gs.Word2Vec.load_word2vec_format(txt_path, binary=False)
+        e2v = gs.KeyedVectors.load_word2vec_format(txt_path, binary=False)
         e2v.save_word2vec_format(bin_path, binary=True)
 
         return e2v
