@@ -12,12 +12,12 @@ import tensorflow as tf
 from tensorflow.python.framework import ops
 import pickle as pk
 
-from tfrnn.hooks import LossHook, SpeedHook
+from emoji2vec.tfrnn.hooks import LossHook, SpeedHook
 
 # Internal dependencies
-from model import Emoji2Vec
-from parameter_parser import CliParser
-from utils import build_kb, get_examples_from_kb, generate_embeddings, get_metrics, generate_predictions
+from emoji2vec.model import Emoji2Vec
+from emoji2vec.parameter_parser import CliParser
+from emoji2vec.utils import build_kb, get_examples_from_kb, generate_embeddings, get_metrics, generate_predictions
 
 # Authorship
 
@@ -51,7 +51,7 @@ def __run_training():
                         embeddings_array=embeddings_array, dataset_name=args.dataset)
 
 
-def train_save_evaluate(params, kb, train_set, dev_set, ind2emoji, embeddings_array, dataset_name):
+def train_save_evaluate(params, kb, train_set, dev_set, ind2emoji, embeddings_array, dataset_name,export_dir):
     """Train the model on the kb, save the trained model, and evaluate it against several metrics.
 
     Args:
@@ -71,7 +71,7 @@ def train_save_evaluate(params, kb, train_set, dev_set, ind2emoji, embeddings_ar
     tf.reset_default_graph()
 
     # Generate the model path
-    model_folder = params.model_folder(dataset_name=dataset_name)
+    model_folder = export_dir
     model_path = model_folder + '/model.ckpt'
 
     # If the minibatch is larger than the number of emojis we have, we can't can't fill train/test batches

@@ -6,7 +6,7 @@ import argparse as arg
 import pprint
 
 # Internal dependencies
-from model import ModelParams
+from emoji2vec.model import ModelParams
 
 # Authorship
 __author__ = "Ben Eisner, Tim Rocktaschel"

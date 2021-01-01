@@ -11,8 +11,8 @@ import numpy as np
 import sklearn.metrics as metrics
 import gensim.models as gs
 
-from naga.shared.kb import BatchNegSampler
-from naga.shared.trainer import Trainer
+from emoji2vec.naga.shared.kb import BatchNegSampler
+from emoji2vec.naga.shared.trainer import Trainer
 
 # Authorship
 __author__ = "Ben Eisner, Tim Rocktaschel"
